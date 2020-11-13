@@ -1,46 +1,47 @@
 import React, { useState } from "react";
-
+import { v4 as uuid } from 'uuid';
 import NewBoxForm from "./NewBoxForm";
+import Box from "./Box"
 
 /*
+ Does all the heavy lifting. Passes down functions to children to 
+ change state.
 
-Props: Height
-       Width
-       Color
-
-State: formData
-       boxList
+State: boxList
 
 */
 
-
-function BoxList(props) {
+function BoxList() {
   const [boxes, setBoxes] = useState([]);
 
-  // const createBoxList = boxes.map(box=> {
-  //   <div><Box/></div>
-  // }
-  //   );
+function addBox(boxObj) {
+  let id = uuid()
+  setBoxes(boxList => [...boxList,  {...boxObj, id}]);
 
-  // function addBox{
-  //   //Add box to boxes state
-  // }
+}
+  function createBoxes() {
+    
+    return boxes.map((box) => 
+    
+      (<Box 
+        height={box.height}
+        key={box.id}
+        id={box.id} 
+        width={box.width}
+        color={box.color} 
+        remove={remove}/> )) 
+  } 
 
-  function addBox(boxObj) {
-
-    setBoxes(boxList => [...boxList, boxObj]);
-
-    console.log("BOX OBJECTTTT", boxObj);
+  function remove(id) {
+    setBoxes(boxes.filter(box => box.id !== id));
   }
 
-
-  console.log("BOX LIST", boxes);
+  
   return (<div>
-    <NewBoxForm addBox={addBox} />
-  </div>
-  )
-
-  }
-
+          <NewBoxForm addBox={addBox} />
+          <div>{createBoxes()}</div>
+          </div>
+         )
+}
 
 export default BoxList;

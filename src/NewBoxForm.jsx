@@ -2,28 +2,26 @@ import React, {useState } from "react";
 
 
 /*
-
+Renders form for user input to create boxes.
 
 State: formData
 
-       Props: Height
-              Width
-              Color
+       props: newBoxForm
 
 */
 
-function NewBoxForm(Props){
-
-  const [formData, setFormData] = useState({
+function NewBoxForm(props){
+  const initialState = {
     height: "",
     width: "",
     color: ""
-  });
+  }
+  const [formData, setFormData] = useState(initialState);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("Check out state ->", formData);
-    Props.addBox(formData);
+    props.addBox(formData);
+    setFormData(initialState)
   }
 
 
@@ -64,8 +62,6 @@ function NewBoxForm(Props){
     <button>Add a new box!</button>
   </form>
   )
-
-
 }
 
 export default NewBoxForm;
